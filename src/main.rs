@@ -16,3 +16,16 @@ impl Server {
         println!("Server listening on: {}", self.addr)
     }
 }
+
+enum HttpVerbs {
+    GET,
+    DELETE,
+    POST,
+    PUT
+}
+
+struct Request {
+    path: String,
+    query_string: Option<String>,
+    method: HttpVerbs,
+}
