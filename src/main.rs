@@ -1,31 +1,45 @@
+use server::Server;
+use http::request::Request;
+
 fn main() {
     let server = Server::new(String::from("127.0.0.1:8000"));
     server.run();
 }
 
-struct Server {
-    addr: String,
-}
-
-impl Server {
-    fn new(addr: String) -> Self {
-        Self { addr }
+mod server {
+    pub struct Server {
+        addr: String,
     }
 
-    fn run(&self) {
-        println!("Server listening on: {}", self.addr)
+    impl Server {
+        pub fn new(addr: String) -> Self {
+            Self { addr }
+        }
+
+        pub fn run(&self) {
+            println!("Server listening on: {}", self.addr)
+        }
     }
 }
 
-enum HttpVerbs {
-    GET,
-    DELETE,
-    POST,
-    PUT
+mod http {
+    pub mod request {
+        use super::http_verbs::HttpVerbs;
+
+        pub struct Request {
+            path: String,
+            query_string: Option<String>,
+            method: HttpVerbs,
+        }
+    }
+
+    mod http_verbs {
+        pub enum HttpVerbs {
+            GET,
+            DELETE,
+            POST,
+            PUT
+        }
+    }
 }
 
-struct Request {
-    path: String,
-    query_string: Option<String>,
-    method: HttpVerbs,
-}
